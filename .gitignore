@@ -1,0 +1,26 @@
+# Dependencies and build outputs
+node_modules/
+dist/
+coverage/
+
+# Runtime evidence and logs
+artifacts/runs/
+*.log
+npm-debug.log*
+
+# Secrets and environment files
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.mnemonic
+credentials*.json
+
+# Editors and operating systems
+.vscode/
+.idea/
+*.swp
+*~
+.DS_Store
+Thumbs.db
