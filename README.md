@@ -1,110 +1,123 @@
 # eCDF
 
-## Status
+A TypeScript research prototype for deterministic digital-value transfer experiments, demonstrating an explicit local transfer lifecycle while keeping future Stellar Testnet settlement outside the implemented boundary.
 
-**Research Prototype — v0.1**
+| Field | Value |
+|---|---|
+| Status | **TESTED · PUBLIC** |
+| Version | `0.1.0-alpha.0` |
+| Repository | [Emeraude-Kiangana/ecdf](https://github.com/Emeraude-Kiangana/ecdf) |
+| CI | [GitHub Actions — verify](https://github.com/Emeraude-Kiangana/ecdf/actions/workflows/verify.yml) |
+| Demo | Not publicly available yet |
+| License | Apache-2.0 |
+| Maintainer | Emeraude Kiangana |
 
-Repository Foundation for a test-only, pre-production experiment.
+## What it does
 
-## Purpose
+eCDF currently implements a local, infrastructure-independent transfer domain model. A `TransferOperation` moves through explicit states, validates participants and atomic-unit amounts, enforces role-based transition rules, rejects invalid or duplicate events, and produces deterministic snapshots.
 
-eCDF is a technology research prototype for testing whether an explicitly
-authorized test-value transfer can produce a verifiable and reproducible result
-through a minimal settlement adapter.
+The implemented behavior is local. A `SETTLED` domain state is not proof of network settlement.
 
-## Core Hypothesis
+## Why it exists
 
-If a test-value transfer is modeled as an explicit state machine and authorized
-locally with a disposable Testnet key, then a prototype actor can submit and
-independently verify a minimal Stellar Classic payment with an unambiguous
-observable result, without production custody or a real-world fiat claim.
+eCDF studies how a digital-value transfer can be modeled so that its lifecycle, authorization rules, invariants and outcomes are explicit and testable before any network or financial integration is attempted.
 
-## Scope
+The repository separates demonstrated behavior from future research. Stellar Testnet settlement is documented as a possible later experiment, not as a current capability.
 
-The planned prototype compares one canonical transfer intent through:
+## Current capabilities
 
-- a deterministic centralized baseline; and
-- a minimal Stellar Classic Testnet path.
+- immutable `TransferOperation` aggregate;
+- explicit `DRAFT`, `AUTHORIZED`, `SUBMITTED`, `SETTLED`, `REJECTED`, `FAILED` and `RECONCILIATION_REQUIRED` states;
+- role-constrained state transitions;
+- validation of identifiers, participants and positive atomic-unit amounts;
+- exact amount handling with `bigint`;
+- local duplicate-event rejection by `EventId`;
+- deterministic operation history and snapshots;
+- safe health report with no network call;
+- automated type checking, tests and health verification.
 
-INC-01 creates only the executable repository foundation and bootstrap health
-test. Domain and network behavior are not implemented yet.
+## Quick start
 
-## Non-Goals
-
-- real funds or Mainnet;
-- CDF backing, redemption, stablecoin or official-currency claims;
-- production custody, banking, mobile-money or KYC integration;
-- Soroban, custom smart contracts or the Stellar Asset Contract;
-- a production API, web UI, database, deployment or high availability;
-- legal, regulatory, security or product-market validation.
-
-## Architecture
-
-The technical source of truth is under [`docs/architecture/`](docs/architecture/).
-Research, ADR and prototype build records are maintained separately under
-`docs/`.
-
-## Requirements
-
-- Node.js 24.x
-- npm 11.x
-- Git for repository operations
-
-## Installation
+Requirements: Node.js 24.x, npm 11.x and Git.
 
 ```bash
+git clone https://github.com/Emeraude-Kiangana/ecdf.git
+cd ecdf
 npm ci
+npm run verify
 ```
 
-## Configuration
-
-INC-01 requires no active RPC connection or secret. For later local
-experiments, copy `.env.example` to `.env` and replace placeholders only with
-disposable Testnet configuration. `.env` is ignored by Git.
-
-Never use a Mainnet or value-bearing private key.
-
-## Run
-
-```bash
-npm run health
-```
-
-The command compiles the minimal source and prints safe project/runtime/config
-metadata. It performs no network call.
-
-## Test
+Individual checks:
 
 ```bash
 npm test
 npm run typecheck
-npm run verify
+npm run health
 ```
 
-`npm run verify` runs deterministic local checks only. Live Testnet tests will
-use a separate explicit command in a later increment.
+`npm run verify` runs type checking, 27 automated tests and the local health command. It does not call Stellar or prove live settlement.
 
 ## Evidence
 
-INC-01 evidence consists of observed command exit codes, test counts, runtime
-versions, the dependency lockfile, tracked-file inventory, security scan and Git
-commit metadata. Generated runtime evidence directories remain ignored until a
-future explicit review/export step.
+| Claim | Inspectable evidence |
+|---|---|
+| Tested domain foundation | [Foundation commit `34814b06ae28fe5e3a62b9866cb9781332312b7b`](https://github.com/Emeraude-Kiangana/ecdf/commit/34814b06ae28fe5e3a62b9866cb9781332312b7b) |
+| 27 automated tests pass | [GitHub Actions run `35324657015`](https://github.com/Emeraude-Kiangana/ecdf/actions/runs/35324657015) |
+| CI contract | [`.github/workflows/verify.yml`](.github/workflows/verify.yml) |
+| Domain implementation | [`src/domain/`](src/domain/) |
+| Test implementation | [`tests/`](tests/) |
+| Locked dependencies | [`package-lock.json`](package-lock.json) |
+| Security boundary | [`SECURITY.md`](SECURITY.md) |
+| Factual maturity snapshot | [`docs/PROJECT-STATUS.md`](docs/PROJECT-STATUS.md) |
 
-## Security
+The cited CI run checked out commit `7305b304bd5956a2d67fb68987c2656a53c71a07` on Ubuntu, installed locked dependencies with `npm ci`, and completed `npm run verify` successfully: 2 test files, 27 tests passed, typecheck passed and health returned `status: "ok"`.
 
-No real secret, mnemonic, credential, personal data or value-bearing key belongs
-in this repository. See [`SECURITY.md`](SECURITY.md). The health command never
-prints environment values or secret material.
+No independent clean reproduction has been recorded, so this README does not claim `REPRODUCIBLE` or `EXTERNALLY VALIDATED`.
+
+## Architecture
+
+```text
+Transfer intent
+    ↓
+Domain validation and invariants
+    ↓
+Deterministic state machine
+    ↓
+Role authorization
+    ↓
+Future settlement adapter — NOT IMPLEMENTED
+```
+
+See [`docs/architecture/`](docs/architecture/) for the detailed architecture and [`docs/README.md`](docs/README.md) for the documentation map.
 
 ## Limitations
 
-This foundation does not establish that a user problem is validated, that
-Stellar is necessary, that a payment has executed, or that eCDF is production
-ready, legally permissible, secure, scalable or economically viable.
+- Stellar live settlement adapter: **NOT IMPLEMENTED**.
+- No public demo.
+- No real funds or Mainnet.
+- No production custody.
+- No CDF backing or redemption claim.
+- No official-currency, CBDC or banking claim.
+- No mobile-money integration.
+- No production KYC.
+- No regulator approval.
+- No production security audit.
+- No product-market or external validation.
+- Local duplicate-event handling is not persistent or cross-process.
+- Domain roles are logical rules, not cryptographic authentication.
+- The installed Stellar SDK is a dependency only; it does not establish a live integration.
 
-## Disclaimer
+## Security
 
-eCDF is a technology research prototype. It is not an official currency, CBDC,
-bank, payment service, investment product, deposit or claim on Congolese francs.
-Testnet assets have no represented monetary value.
+Do not commit real secrets, Mainnet keys, mnemonics, credentials or sensitive financial data. `.env` is ignored by Git. Disposable Testnet keys may be used only if a live adapter is introduced and reviewed in a future increment. See [`SECURITY.md`](SECURITY.md).
+
+## License
+
+Apache License 2.0 — see [LICENSE](LICENSE).
+
+## Author
+
+**Emeraude Kiangana**  
+Founder / Builder — Open Technologies
+
+© EMERAUDE KIANGANA
