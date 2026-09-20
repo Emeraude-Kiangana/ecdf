@@ -28,3 +28,6 @@ jobs:
 
       - name: Verify foundation
         run: npm run verify
+
+      - name: Run deterministic local demo
+        run: npm run demo

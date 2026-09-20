@@ -8,7 +8,7 @@ A TypeScript research prototype for deterministic digital-value transfer experim
 | Version | `0.1.0-alpha.0` |
 | Repository | [Emeraude-Kiangana/ecdf](https://github.com/Emeraude-Kiangana/ecdf) |
 | CI | [GitHub Actions — verify](https://github.com/Emeraude-Kiangana/ecdf/actions/workflows/verify.yml) |
-| Demo | Not publicly available yet |
+| Demo | Local deterministic CLI demo via `npm run demo` |
 | License | Apache-2.0 |
 | Maintainer | Emeraude Kiangana |
 
@@ -34,6 +34,7 @@ The repository separates demonstrated behavior from future research. Stellar Tes
 - local duplicate-event rejection by `EventId`;
 - deterministic operation history and snapshots;
 - safe health report with no network call;
+- deterministic local lifecycle demo with explicit `LOCAL_DOMAIN_ONLY` boundary;
 - automated type checking, tests and health verification.
 
 ## Quick start
@@ -45,6 +46,7 @@ git clone https://github.com/Emeraude-Kiangana/ecdf.git
 cd ecdf
 npm ci
 npm run verify
+npm run demo
 ```
 
 Individual checks:
@@ -53,9 +55,10 @@ Individual checks:
 npm test
 npm run typecheck
 npm run health
+npm run demo
 ```
 
-`npm run verify` runs type checking, 27 automated tests and the local health command. It does not call Stellar or prove live settlement.
+`npm run verify` runs type checking, the automated test suite and the local health command. `npm run demo` executes a deterministic `DRAFT → AUTHORIZED → SUBMITTED → SETTLED` local-domain scenario and prints inspectable JSON snapshots. Neither command calls Stellar or proves live settlement.
 
 ## Evidence
 
@@ -65,6 +68,7 @@ npm run health
 | 27 automated tests pass | [GitHub Actions run `35324657015`](https://github.com/Emeraude-Kiangana/ecdf/actions/runs/35324657015) |
 | CI contract | [`.github/workflows/verify.yml`](.github/workflows/verify.yml) |
 | Domain implementation | [`src/domain/`](src/domain/) |
+| Local lifecycle demo source | [`src/demo.ts`](src/demo.ts) |
 | Test implementation | [`tests/`](tests/) |
 | Locked dependencies | [`package-lock.json`](package-lock.json) |
 | Security boundary | [`SECURITY.md`](SECURITY.md) |
@@ -93,7 +97,7 @@ See [`docs/architecture/`](docs/architecture/) for the detailed architecture and
 ## Limitations
 
 - Stellar live settlement adapter: **NOT IMPLEMENTED**.
-- No public demo.
+- No browser-hosted public demo; the current demo is a local deterministic CLI scenario.
 - No real funds or Mainnet.
 - No production custody.
 - No CDF backing or redemption claim.
