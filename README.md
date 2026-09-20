@@ -65,7 +65,9 @@ npm run demo
 | Claim | Inspectable evidence |
 |---|---|
 | Tested domain foundation | [Foundation commit `34814b06ae28fe5e3a62b9866cb9781332312b7b`](https://github.com/Emeraude-Kiangana/ecdf/commit/34814b06ae28fe5e3a62b9866cb9781332312b7b) |
-| 27 automated tests pass | [GitHub Actions run `35324657015`](https://github.com/Emeraude-Kiangana/ecdf/actions/runs/35324657015) |
+| 29 automated tests pass | [GitHub Actions run `35508188094`](https://github.com/Emeraude-Kiangana/ecdf/actions/runs/35508188094) |
+| Deterministic demo passes in CI | [GitHub Actions run `35508188094`](https://github.com/Emeraude-Kiangana/ecdf/actions/runs/35508188094) |
+| Current verified main | [`8ef8002ac538caae69e5e9aa6f093bc826af3f87`](https://github.com/Emeraude-Kiangana/ecdf/commit/8ef8002ac538caae69e5e9aa6f093bc826af3f87) |
 | CI contract | [`.github/workflows/verify.yml`](.github/workflows/verify.yml) |
 | Domain implementation | [`src/domain/`](src/domain/) |
 | Local lifecycle demo source | [`src/demo.ts`](src/demo.ts) |
@@ -74,7 +76,7 @@ npm run demo
 | Security boundary | [`SECURITY.md`](SECURITY.md) |
 | Factual maturity snapshot | [`docs/PROJECT-STATUS.md`](docs/PROJECT-STATUS.md) |
 
-The cited CI run checked out commit `7305b304bd5956a2d67fb68987c2656a53c71a07` on Ubuntu, installed locked dependencies with `npm ci`, and completed `npm run verify` successfully: 2 test files, 27 tests passed, typecheck passed and health returned `status: "ok"`.
+The current cited CI run checked out commit `8ef8002ac538caae69e5e9aa6f093bc826af3f87` on Ubuntu, installed locked dependencies with `npm ci`, completed `npm run verify` successfully with 3 test files and 29/29 tests passed, then completed the deterministic `npm run demo` step successfully. The demo output records `boundary: "LOCAL_DOMAIN_ONLY"` and `networkSettlement: false`.
 
 No independent clean reproduction has been recorded, so this README does not claim `REPRODUCIBLE` or `EXTERNALLY VALIDATED`.
 
