@@ -13,6 +13,7 @@
     "build": "tsc -p tsconfig.json",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "health": "npm run build --silent && node dist/src/index.js",
+    "demo": "npm run build --silent && node dist/src/demo.js",
     "test": "vitest run",
     "verify": "npm run typecheck && npm test && npm run health"
   },
