@@ -14,6 +14,8 @@
 
 **Architecture basis:** Cycle 2 ADR-eCDF-001 through ADR-eCDF-007. Option B — Stellar Classic minimal prototype — is specified as the experimental path. This is **not** a decision that a production eCDF must use Stellar. Option A remains the required comparison baseline.
 
+**Current boundary review:** [`stellar-adapter-boundary-review-v0.1.md`](stellar-adapter-boundary-review-v0.1.md) documents the evidence-based domain/settlement boundary established by P03-CP03-C. It does not represent an implemented adapter.
+
 ---
 
 # 1. CORE HYPOTHESIS
